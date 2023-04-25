@@ -41,6 +41,8 @@ library(dplyr)
 #   call to h), but there is a bug in mockery that should be fixed with the next
 #   release. See https://github.com/r-lib/mockery/pull/39.
 
+# store a temporary fake API key, and stash the old options to restore later
+op <- options(covidcast.api_key = "test")
 
 with_mock_api({
   test_that("covidcast_meta formats result correctly", {
@@ -417,3 +419,6 @@ test_that("as.covidcast_signal does not affect covidcast_signal objects", {
 
   expect_equal(as.covidcast_signal(expected), expected)
 })
+
+# restore options
+options(op)
